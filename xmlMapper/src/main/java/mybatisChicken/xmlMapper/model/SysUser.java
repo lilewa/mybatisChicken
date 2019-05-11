@@ -38,7 +38,6 @@ public class SysUser implements Serializable {
 	 */
 	private Date createTime;
 
-
 	public Long getId() {
 		return id;
 	}
@@ -94,5 +93,6 @@ public class SysUser implements Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+
 
 }

@@ -26,7 +26,7 @@
     </environments>
 
     <mappers>
-        <mapper resource="mapper/CountryMapper.xml"/>
+        <mapper resource="mybatisChicken/xmlMapper/mapper/UserMapper.xml"/>
     </mappers>
 
 
