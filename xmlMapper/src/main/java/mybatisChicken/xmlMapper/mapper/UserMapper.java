@@ -2,6 +2,7 @@ package mybatisChicken.xmlMapper.mapper;
 
 
 
+import mybatisChicken.xmlMapper.model.Student;
 import mybatisChicken.xmlMapper.model.SysUser;
 import org.apache.ibatis.annotations.Param;
 
@@ -73,6 +74,30 @@ public interface UserMapper {
 	 * @return
 	 */
 	int deleteById(SysUser sysUser);
-	
 
+
+	int insertStudent(Student stu);
+
+	SysUser selectMapBiggerCol(long id);
+
+	SysUser selectColBiggerMap(long id);
+
+	/**
+	 * 使用存储过程查询用户信息
+	 *
+	 * @param user
+	 * @return
+	 */
+	void selectUserById(SysUser user);
+
+	/**
+	 * 使用存储过程分页查询
+	 *
+	 * @param userName
+	 * @param pageNum
+	 * @param pageSize
+	 * @param total
+	 * @return
+	 */
+	List<SysUser> selectUserPage(Map<String, Object> params);
 }

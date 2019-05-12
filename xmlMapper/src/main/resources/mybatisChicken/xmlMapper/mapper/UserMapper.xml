@@ -123,6 +123,51 @@
 		delete from sys_user where id = #{id}
 	</delete>
 
+	<!--多列主键，className，stuno 共同作为主键。stuno自增长。-->
+	<insert id="insertStudent" useGeneratedKeys="true" keyProperty="stuno">
+       insert into student(classname)
+        values(
+        #{className})
+    </insert>
+
+
+	<select id="selectMapBiggerCol" resultMap="userMap">
+		select id from sys_user where id = #{id}
+	</select>
+
+	<select id="selectColBiggerMap" resultMap="userMapidname">
+		select * from sys_user where id = #{id}
+	</select>
+	<resultMap id="userMapidname" type="mybatisChicken.xmlMapper.model.SysUser">
+		<id property="id" column="id"/>
+		<result property="userName" column="user_name"/>
+	</resultMap>
+
+
+	<!--由于存储过程方式不支持MyBatis 的二级缓存 ，因此
+   为了避免缓存配置出错，直接将select 标签的useCache 属性设置为false 。-->
+	<select id="selectUserById" statementType="CALLABLE" useCache="false">
+	    {call select_user_by_id(
+	    	#{id, mode=IN},
+	    	#{userName, mode=OUT, jdbcType=VARCHAR},
+	    	#{userPassword, mode=OUT, jdbcType=VARCHAR},
+	    	#{userEmail, mode=OUT, jdbcType=VARCHAR},
+	    	#{userInfo, mode=OUT, jdbcType=VARCHAR},
+	    	#{headImg, mode=OUT, jdbcType=BLOB, javaType=_byte[]},
+	    	#{createTime, mode=OUT, jdbcType=TIMESTAMP}
+	    )}
+	</select>
+
+	<!--因为调用存储过程返回查询结果集， select 标签需设置resultMap，将结果映射到List<SysUser>
+  该方法还通过 total 出参得到了查询的总数-->
+	<select id="selectUserPage" statementType="CALLABLE" useCache="false" resultMap="userMap">
+	    {call select_user_page(
+	    	#{userName, mode=IN},
+	    	#{offset, mode=IN},
+	    	#{limit, mode=IN},
+	    	#{total, mode=OUT, jdbcType=BIGINT}
+	    )}
+	</select>
 </mapper>
 
 

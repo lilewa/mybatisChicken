@@ -2,6 +2,7 @@ package mybatisChicken.xmlMapper;
 
 
 import mybatisChicken.xmlMapper.mapper.UserMapper;
+import mybatisChicken.xmlMapper.model.Student;
 import mybatisChicken.xmlMapper.model.SysUser;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
@@ -202,7 +203,88 @@ public class UserMapperTest extends BaseMapperTest {
 	}
 
 
+	@Test
+	public void testInsertStudent(){
+		SqlSession sqlSession = getSqlSession();
+		try {
+			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+			//创建一个 user 对象
+			Student stu = new Student();
+			stu.setClassName("一年级");
 
+			int result = userMapper.insertStudent(stu);
+			//只插入 1 条数据
+			Assert.assertEquals(1, result);
+			//因为 id 回写，所以 id 不为 null
+			//Assert.assertNotNull(user.getId());
 
+		} finally {
+			//sqlSession.commit();
+			//不要忘记关闭 sqlSession
+			sqlSession.close();
+		}
+	}
 
+	/*测试查询列和resultmap配置的映射列数量不等的情况*/
+	@Test
+	public void testColNotEqMap(){
+		SqlSession sqlSession = getSqlSession();
+		try {
+			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
+			//SysUser user = userMapper.selectMapBiggerCol(1l);
+				SysUser user = userMapper.selectColBiggerMap(1l);
+
+			Assert.assertNotEquals(1, user);
+
+		} finally {
+			//sqlSession.commit();
+			//不要忘记关闭 sqlSession
+			sqlSession.close();
+		}
+	}
+
+	@Test
+	public void testSelectUserById(){
+		//获取 sqlSession
+		SqlSession sqlSession = getSqlSession();
+		try {
+			//获取 UserMapper 接口
+			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+			SysUser user = new SysUser();
+			user.setId(1L);
+			userMapper.selectUserById(user);
+			Assert.assertNotNull(user.getUserName());
+			System.out.println("用户名：" + user.getUserName());
+		} finally {
+			//不要忘记关闭 sqlSession
+			sqlSession.close();
+		}
+	}
+
+	/*
+		因为调用存储过程返回查询结果集， select 标签需设置resultMap，将结果映射到List<SysUser>
+		该方法还通过 total 出参得到了查询的总数 */
+	@Test
+	public void testSelectUserPage(){
+		//获取 sqlSession
+		SqlSession sqlSession = getSqlSession();
+		try {
+			//获取 UserMapper 接口
+			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("userName", "ad");
+			params.put("offset", 0);
+			params.put("limit", 10);
+			List<SysUser> userList = userMapper.selectUserPage(params);
+			Long total = (Long) params.get("total");
+			System.out.println("总数:" + total);
+			for(SysUser user : userList){
+				System.out.println("用户名：" + user.getUserName());
+			}
+		} finally {
+			//不要忘记关闭 sqlSession
+			sqlSession.close();
+		}
+	}
 }
