@@ -2,6 +2,8 @@ package mybatisChicken.relation.mapper;
 
 import mybatisChicken.relation.model.SysRole;
 import mybatisChicken.relation.model.SysUser;
+import mybatisChicken.relation.model.SysUserId;
+import mybatisChicken.relation.model.SysUserName;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -15,7 +17,7 @@ public interface UserMapper {
 	 * @param id
 	 * @return
 	 */
-	SysUser selectById(Long id);
+	SysUser selectBy2JavaBean(SysUserId userId, SysUserName userName);
 
 	/**
 	 * 查询全部用户

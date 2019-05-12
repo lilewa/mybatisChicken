@@ -1,6 +1,5 @@
 package mybatisChicken.relation.model;
 
-import com.lile.mybatisExer.type.Enabled;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -22,7 +21,7 @@ public class SysRole implements Serializable {
 	/**
 	 * 有效标志
 	 */
-	private Enabled enabled;
+	//private Enabled enabled;
 	/**
 	 * 创建人
 	 */
@@ -48,18 +47,18 @@ public class SysRole implements Serializable {
 		this.createInfo = createInfo;
 	}
 
-	/**
+/*	*//**
 	 * 角色包含的权限列表
-	 */
+	 *//*
 	List<SysPrivilege> privilegeList;
 
 	public List<SysPrivilege> getPrivilegeList() {
 		return privilegeList;
-	}
+	}*/
 
-	public void setPrivilegeList(List<SysPrivilege> privilegeList) {
+/*	public void setPrivilegeList(List<SysPrivilege> privilegeList) {
 		this.privilegeList = privilegeList;
-	}
+	}*/
 
 	public Long getId() {
 		return id;
@@ -77,13 +76,13 @@ public class SysRole implements Serializable {
 		this.roleName = roleName;
 	}
 
-	public Enabled getEnabled() {
+/*	public Enabled getEnabled() {
 		return enabled;
 	}
 
 	public void setEnabled(Enabled enabled) {
 		this.enabled = enabled;
-	}
+	}*/
 
 	public String getCreateBy() {
 		return createBy;

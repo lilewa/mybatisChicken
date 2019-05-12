@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatisChicken.relation.mapper.UserMapper">
+
+
+    <resultMap id="userMap" type="mybatisChicken.relation.model.SysUser">
+        <id property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userPassword" column="user_password"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="userInfo" column="user_info"/>
+        <result property="headImg" column="head_img" jdbcType="BLOB"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--XML 中的select 标签的id 属性值和定义的接口方法名是一样的。MyBatis
+    就是通过这种方式将接口方法和XML 中定义的SQL 语句关联到一起的，如果接口方法没有和
+    XML 中的id 属性值相对应，启动程序便会报错-->
+    <select id="selectBy2JavaBean" resultMap="userMap">
+		select * from sys_user where id = #{param1.id} and user_name=#{param2.userName}
+	</select>
+
+
+
+</mapper>
+
+
