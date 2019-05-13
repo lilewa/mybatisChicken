@@ -30,9 +30,7 @@
 
     <mappers>
         <mapper resource="mybatisChicken/relation/mapper/UserMapper.xml"/>
-<!--
         <mapper resource="mybatisChicken/relation/mapper/RoleMapper.xml"/>
--->
     </mappers>
 
 <!-- <mappers>

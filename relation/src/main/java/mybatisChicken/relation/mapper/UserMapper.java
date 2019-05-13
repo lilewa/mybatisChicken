@@ -20,12 +20,13 @@ public interface UserMapper {
 	SysUser selectBy2JavaBean(SysUserId userId, SysUserName userName);
 
 	/**
-	 * 查询全部用户
-	 * 
+	 根据用户id查询用户信息及国籍信息	 *
 	 * @return
 	 */
-	List<SysUser> selectAll();
-	
+	  SysUser selectUserCountry(Long id);
+
+
+	  SysUser selectUserCountryAssociation(Long id);
 	/**
 	 * 根据用户 id 获取角色信息
 	 * 

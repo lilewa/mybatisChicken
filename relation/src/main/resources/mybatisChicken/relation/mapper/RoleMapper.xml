@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatisChicken.relation.mapper.RoleMapper">
+
+    <select id="selectRoleById" resultMap="roleAutoMap">
+		select
+		   	id,
+		   	role_name roleName,
+		    create_by createBy,
+		    create_time  createTime
+		from sys_role
+		where  id = #{id}
+	</select><!--使用列别名自动映射-->
+
+    <resultMap id="roleAutoMap" autoMapping="true" type="mybatisChicken.relation.model.SysRole">
+        <id property="id" column="id" />
+        <result property="createInfo.createBy" column="createBy"/>
+        <result property="createInfo.createTime" column="createTime"/>
+    </resultMap>
+</mapper>

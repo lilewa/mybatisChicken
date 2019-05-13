@@ -35,5 +35,44 @@ public class UserMapperTest extends BaseMapperTest {
 			sqlSession.close();
 		}
 	}
+	@Test
+	public void testselectUserCountry(){
+		//获取 sqlSession
+		SqlSession sqlSession = getSqlSession();
+		try {
+			//获取 UserMapper 接口
+			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
+
+			SysUser user = userMapper.selectUserCountry(1L);
+			//user 不为空
+			Assert.assertNotNull(user);
+			//userName = admin
+			Assert.assertEquals("admin", user.getUserName());
+		} finally {
+			//不要忘记关闭 sqlSession
+			sqlSession.close();
+		}
+	}
+
+	@Test
+	public void testselectUserCountryAssociation(){
+		//获取 sqlSession
+		SqlSession sqlSession = getSqlSession();
+		try {
+			//获取 UserMapper 接口
+			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
+
+			SysUser user = userMapper.selectUserCountryAssociation(1L);
+			//user 不为空
+			Assert.assertNotNull(user);
+			//userName = admin
+			Assert.assertEquals("admin", user.getUserName());
+		} finally {
+			//不要忘记关闭 sqlSession
+			sqlSession.close();
+		}
+	}
 
 }

@@ -37,11 +37,8 @@ public class SysUser implements Serializable {
 	 * 创建时间
 	 */
 	private Date createTime;
-	
-	/**
-	 * 用户角色
-	 */
-	private SysRole role;
+	private Long countryId;
+ 	private Country country;
 	
 	/**
 	 * 用户的角色集合
@@ -104,14 +101,6 @@ public class SysUser implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public SysRole getRole() {
-		return role;
-	}
-
-	public void setRole(SysRole role) {
-		this.role = role;
-	}
-
 	public List<SysRole> getRoleList() {
 		return roleList;
 	}
@@ -120,4 +109,19 @@ public class SysUser implements Serializable {
 		this.roleList = roleList;
 	}
 
+	public Country getCountry() {
+		return country;
+	}
+
+	public void setCountry(Country country) {
+		this.country = country;
+	}
+
+	public Long getCountryId() {
+		return countryId;
+	}
+
+	public void setCountryId(Long countryId) {
+		this.countryId = countryId;
+	}
 }
