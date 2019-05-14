@@ -12,6 +12,7 @@
         <result property="userInfo" column="user_info"/>
         <result property="headImg" column="head_img" jdbcType="BLOB"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="countryId" column="country_id"  />
     </resultMap>
 
     <!--XML 中的select 标签的id 属性值和定义的接口方法名是一样的。MyBatis
@@ -23,9 +24,23 @@
 
     <select id="selectUserCountry" resultMap="userCountryMap">
        SELECT u.id,user_name,user_password,user_email,user_info,head_img,create_time,country_id,
-      countryname,countrycode
+      countryname country_name,countrycode country_code
       FROM sys_user u,country c where c.id=u.country_id and c.id=#{id}
     </select>
+
+    <!--1对1关系的自动映射写法-->
+<!--    <select id="selectUserCountry" resultType="mybatisChicken.relation.model.SysUser">
+       SELECT u.id,
+              user_name userName,
+              user_password userPassword,
+              user_email userEmail,
+              country_id countryId,
+              country_id "country.id",
+              countryname "country.countryname",
+              countrycode "country.countrycode"
+      FROM sys_user u,country c where c.id=u.country_id and c.id=#{id}
+    </select>-->
+
 
     <resultMap id="userCountryMap" type="mybatisChicken.relation.model.SysUser">
         <id property="id" column="id"/>
@@ -37,13 +52,13 @@
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="countryId" column="country_id"  />
         <result property="country.id" column="country_id"/>
-        <result property="country.countryname" column="countryname"/>
-        <result property="country.countrycode" column="countrycode"/>
+        <result property="country.countryname" column="country_name"/>
+        <result property="country.countrycode" column="country_code"/>
     </resultMap>
 
     <select id="selectUserCountryAssociation" resultMap="associationUserCountryMap">
        SELECT u.id,user_name,user_password,user_email,user_info,head_img,create_time,country_id,
-      countryname,countrycode
+      countryname country_name,countrycode country_code
       FROM sys_user u,country c where c.id=u.country_id and c.id=#{id}
     </select>
 
@@ -55,15 +70,49 @@
         <result property="userInfo" column="user_info"/>
         <result property="headImg" column="head_img" jdbcType="BLOB"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-        <result property="countryId" column="country_id"  />
-        <result property="country.id" column="country_id"/>
-        <association property="country"  javaType="mybatisChicken.relation.model.Country"><!--如果没有引用resultMap，javaType必须写-->
-            <result property="countryname" column="countryname"/>
-            <result property="countrycode" column="countrycode"/>
+        <result property="countryId" column="country_id" />
+
+        <association property="country"  javaType="mybatisChicken.relation.model.Country" >
+            <result property="id" column="country_id"/>
+            <result property="countryname" column="country_name"/>
+            <result property="countrycode" column="country_code"/>
         </association>
 
+     <!--   <association property="country"  columnPrefix="country_" javaType="mybatisChicken.relation.model.Country"  >
+            <result property="id" column="id"/>
+            <result property="countryname" column="name"/>
+            <result property="countrycode" column="code"/>
+        </association>-->
     </resultMap>
 
+
+    <select id="selectUserNest" resultMap="userMapAssociation">
+		select * from sys_user where id = #{id}
+	</select>
+
+ <!--   <resultMap id="userMapAssociation" type="mybatisChicken.relation.model.SysUser">
+        <id property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userPassword" column="user_password"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="userInfo" column="user_info"/>
+        <result property="headImg" column="head_img" jdbcType="BLOB"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="countryId" column="country_id"  />
+        <association property="country"   column="{id=country_id}"  select="selectCountry"  />
+     </resultMap>-->
+
+
+    <resultMap id="userMapAssociation" extends="userMap" type="mybatisChicken.relation.model.SysUser">
+        <association property="country"  fetchType="lazy"  column="{id=country_id}"  select="selectCountry"  />
+    </resultMap>
+
+    <select id="selectCountry"  resultMap="countryMap">
+        select  id , countryname  ,countrycode   from country where id=#{id}
+    </select>
+
+    <resultMap id="countryMap" type="mybatisChicken.relation.model.Country">
+    </resultMap>
 
 </mapper>
 

@@ -9,5 +9,4 @@ import java.util.List;
 
 public interface RoleMapper {
 	SysRole selectRoleById(Long id);
-	
 }

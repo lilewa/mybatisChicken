@@ -75,4 +75,27 @@ public class UserMapperTest extends BaseMapperTest {
 		}
 	}
 
+	@Test
+	public void testSelectUserNest(){
+		//获取 sqlSession
+		SqlSession sqlSession = getSqlSession();
+		try {
+			//获取 UserMapper 接口
+			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
+
+			SysUser user = userMapper.selectUserNest(1L);
+			//user 不为空
+			Assert.assertNotNull(user);
+
+			System.out.println("不要打断点查看变量，否则会触发延迟加载");
+
+			//user.getCountry();
+		} finally {
+			//不要忘记关闭 sqlSession
+			sqlSession.close();
+		}
+	}
+
+
 }
